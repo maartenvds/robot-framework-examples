@@ -7,19 +7,20 @@ from subprocess import Popen, call, STDOUT
 
 import Selenium2Library
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
-DEMOAPP = os.path.join(ROOT, 'target', 'server.py')
+WEBSERVER = "target/server.py"
+OUTDIR = "output"
+
+def start_web_server():
+    Popen(['python', WEBSERVER, 'start'], stdout=TemporaryFile(), stderr=STDOUT)
+
+def stop_web_server():
+    call(['python', WEBSERVER, 'stop'], stdout=TemporaryFile(), stderr=STDOUT)
 
 def run_tests(args):
-    start_demo_application()
-    call(['pybot'] + args, shell=(os.sep == '\\'))
-    stop_demo_application()
-
-def start_demo_application():
-    Popen(['python', DEMOAPP, 'start'], stdout=TemporaryFile(), stderr=STDOUT)
-
-def stop_demo_application():
-    call(['python', DEMOAPP, 'stop'], stdout=TemporaryFile(), stderr=STDOUT)
+    start_web_server()
+    call(['mkdir', '-p', OUTDIR])
+    call(['pybot', '--outputdir', OUTDIR] + args, shell=(os.sep == '\\'))
+    stop_web_server()
 
 if __name__ == '__main__':
 
