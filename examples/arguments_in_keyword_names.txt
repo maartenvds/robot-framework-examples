@@ -1,0 +1,20 @@
+*** Settings ***
+Library   OperatingSystem
+
+*** Test Cases ***
+Create a file
+    I execute "touch" with "hello.txt"
+
+Calculate stuff
+    The result of 1 + 8 should be 9
+    The result of 1 << 5 should be 32
+
+*** Keywords ***
+I execute "${cmd}" with "${opts}"
+    Run   ${cmd} ${opts}
+
+The result of ${calculation} should be ${expected}
+    ${result}=        Evaluate            ${calculation}
+    ${expected}=      Convert To Integer  ${expected}
+    Should Be Equal   ${result}           ${expected}
+

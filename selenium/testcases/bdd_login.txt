@@ -1,0 +1,26 @@
+*** Settings ***
+
+Documentation     Some behaviour driven development examples
+Resource          resource.txt
+Test Teardown     Close Browser
+
+*** Test Cases ***
+
+BDD valid login
+    Given a login page
+    When I enter username "demo" and password "mode"
+    Then welcome page should be open
+
+BDD invalid login
+    Given a login page
+    When I enter username "demo" and password ""
+    Then login should have failed
+
+*** Keywords ***
+A login page
+    Open Browser to login page
+
+I enter username "${user}" and password "${pass}"
+    Input Username        ${user}
+    Input Password        ${pass}
+    Submit Credentials
