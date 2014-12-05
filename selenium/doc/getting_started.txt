@@ -1,2 +1,2 @@
 pip install robotframework
-pip install robotframework-selenium2library     #also installs selenium driver
+pip install robotframework-selenium2library (--upgrade)   #also installs selenium driver

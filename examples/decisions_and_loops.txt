@@ -1,0 +1,10 @@
+*** Settings ***
+
+*** Test Cases ***
+
+Decision making
+    ${rc}=            Set Variable      ${-1}
+    ${result}=        Run Keyword If    ${rc} == 0    Create List
+    ...               ELSE IF           ${rc} > 0     Create List   1   2   3
+    ...               ELSE                            Fail          msg=something failed
+    Log               ${result}

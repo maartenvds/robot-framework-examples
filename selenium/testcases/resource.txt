@@ -11,7 +11,7 @@ Library        Selenium2Library
 
 ${SERVER}        localhost:7272
 ${BROWSER}       firefox
-${DELAY}         0.5
+${DELAY}         0.1
 ${VALID USER}    demo
 ${VALID PASSWD}  mode
 ${LOGIN URL}     http://${SERVER}/html/
