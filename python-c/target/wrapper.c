@@ -16,7 +16,6 @@ int picotcp_init(char *ip, char *nm, char *tun)
     pico_stack_init();
     dev = pico_tun_create(tun);
     if (!dev) {
-        perror("Creating tun failed");
         return -1;
     }
 

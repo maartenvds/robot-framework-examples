@@ -1,6 +1,0 @@
-Run picolib with tun:
-
-    * run application using the lib with an ip in the range of the tun
-    * create tun device
-        sudo ifconfig tun0 inet 192.168.3.1 netmask 255.255.255.0
-    * ping the tun address

@@ -7,9 +7,9 @@ import os
 import time
 from ctypes import *
 
-#----------------------------------------------------------------------------#
-#                          Custom C data types                               #
-#----------------------------------------------------------------------------#
+#-----------------------------------------------------------------#
+#                     Custom C data types                         #
+#-----------------------------------------------------------------#
 
 class pico_ip4(Structure):
     _pack_ = 1
@@ -22,25 +22,27 @@ class pico_icmp4_stats(Structure):
                 ("time", c_ulonglong),
                 ("ttl", c_ulong),
                 ("err", c_int)]
-    
-#----------------------------------------------------------------------------#
-#                              Test library                                  #
-#----------------------------------------------------------------------------#
+
+#-----------------------------------------------------------------#
+#                         Test library                            #
+#-----------------------------------------------------------------#
 
 class PicoTCP(object):
-    
-    ROBOT_LIBRARY_SCOPE = 'GLOBAL'
+
+    ROBOT_LIBRARY_SCOPE = "GLOBAL"
 
     def __init__(self, dll="target/libpicotcp.so"):
         """Load device under test
         """
+        print "Loading dll %s"%dll
         self.dut = CDLL(os.getcwd() + "/" + dll)
         self.ping_stats = []
 
     def stack_init(self, ip, netmask, tun="tun0"):
         """Initialize PicoTCP
         """
-        r = self.dut.picotcp_init(c_char_p(ip), c_char_p(netmask), c_char_p(tun))
+        r = self.dut.picotcp_init(c_char_p(ip), c_char_p(netmask),
+                                                c_char_p(tun))
         assert r == 0, "Initialize failed, rc = %d"%r
 
     def get_ping_stats(self):
@@ -61,13 +63,13 @@ class PicoTCP(object):
         """
         self.ping_stats = []
         def cb_ping(s):
-            """Ping client callback as closure to be able to access the self
-            object without the need to provide it as an argument
+            """Ping client callback as closure to be able to
+            access the self object without the need to provide
+            it as an argument
             """
             print "Callback called"
-            assert s.contents.err == 0, \
-                    "Ping callback reports error code %d"%s.contents.err
             stats = {}
+            stats["err"] = s.contents.err
             host = create_string_buffer(30)
             self.dut.pico_ipv4_to_string(host, s.contents.dst.addr)
             stats["host"] = host.value
@@ -80,14 +82,17 @@ class PicoTCP(object):
         # C signature: void(struct pico_icmp4_stats *s)
         Callback = CFUNCTYPE(None, POINTER(pico_icmp4_stats))
         cb = Callback(cb_ping)
-        self.dut.pico_icmp4_ping(c_char_p(dest), c_int(count), c_int(interval), 
-                                            c_int(timeout), c_int(size), cb)
-        self.stack_tick(timeout/1000)
+        self.dut.pico_icmp4_ping(c_char_p(dest),
+                                  c_int(count),
+                                  c_int(int(interval*1000)),
+                                  c_int(int(timeout*1000)),
+                                  c_int(size), cb)
+        self.stack_tick(timeout + 1)
 
 if __name__ == "__main__":
 
     dut = PicoTCP("../target/libpicotcp.so")
     dut.stack_init("192.168.3.3", "255.255.255.0")
     os.system("ifconfig tun0 inet 192.168.3.1 netmask 255.255.255.0")
-    dut.ping("192.168.3.1", 10, 1000, 15000, 64)
+    dut.ping("192.168.3.1", 10, 1, 15, 64)
     print dut.get_ping_stats()

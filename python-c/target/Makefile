@@ -2,7 +2,7 @@
 # Make a shared picotcp library with an additional wrapper
 
 TARGET=libpicotcp.so
-PICOTCPDIR?=../../../picotcp
+PICOTCPDIR?=../../../PicoTCP/picotcp
 EXTRAOBJ=wrapper.o
 PICOBUILD=build
 INC=-I $(PICOBUILD)/include
