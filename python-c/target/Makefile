@@ -4,7 +4,7 @@
 TARGET=libpicotcp.so
 PICOTCPDIR?=../../../picotcp
 EXTRAOBJ=wrapper.o
-PICOBUILD=picobuild
+PICOBUILD=build
 INC=-I $(PICOBUILD)/include
 CFLAGS=-Wall -fPIC
 CC=gcc
@@ -16,7 +16,6 @@ $(TARGET): $(PICOBUILD) $(EXTRAOBJ)
 
 $(PICOBUILD):
 	make -C $(PICOTCPDIR) TUN=1 ARCH=shared
-	cp -r $(PICOTCPDIR)/build $(PICOBUILD)
 
 .c.o: 
 	$(CC) -c $(CFLAGS) $(INC) $< -o $@
