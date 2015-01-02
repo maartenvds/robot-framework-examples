@@ -1,9 +1,10 @@
 *** Settings ***
-
+Library               DebugLibrary
 *** Test Cases ***
 
 Decision making
-    ${rc}=            Set Variable      ${-1}
+    ${rc}=            Set Variable      ${0}
+    Debug
     ${result}=        Run Keyword If    ${rc} == 0    Create List
     ...               ELSE IF           ${rc} > 0     Create List   1   2   3
     ...               ELSE                            Fail          msg=something failed
