@@ -1,18 +1,22 @@
 *** Settings ***
 Library               PicoTCP
 Library               OperatingSystem
+Library               DebugLibrary
+Library               Process
 Suite Setup           common setup
 
 *** Test Cases ***
 
 good weather ping
-    ping              192.168.3.1   ${10}   ${0.1}  ${1.5}  ${64}
+    [Documentation]   Ping to the linux stack through a tun device
+    ping              192.168.3.1   ${10}   ${0.5}  ${10}  ${64}
     ${stats}          get ping stats
     Should be equal   ${stats[0]['err']}    ${0}
     Should be equal   ${stats[0]['size']}   ${64}
     Length should be  ${stats}      ${10}
 
 bad weather ping
+    [Documentation]   Ping to a non existing host
     ping              192.168.3.2   ${10}   ${0.1}  ${1.5}  ${64}
     ${stats}          get ping stats
     Should be equal   ${stats[0]['err']}    ${1}    msg="ping error occured"
@@ -25,3 +29,7 @@ mount tun device      [Arguments]   ${ip}   ${sm}   ${tun}=tun0
 common setup
     stack init        192.168.3.3   255.255.255.0
     mount tun device  192.168.3.1   255.255.255.0
+# jump into a debug shell so you can start wireshark and look at
+# the packets on tun0
+    Debug
+
