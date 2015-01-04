@@ -7,13 +7,21 @@ Test Teardown     Close Browser
 *** Test Cases ***
 
 BDD valid login
+    [Documentation]   Try to log in with valid credentials
+    [Tags]  Login panel
+
     Given a login page
     When I enter username "demo" and password "mode"
+    And Credentials are submitted
     Then welcome page should be open
 
 BDD invalid login
+    [Documentation]   Try to log in with invalid credentials
+    [Tags]  Login panel
+
     Given a login page
     When I enter username "demo" and password ""
+    And Credentials are submitted
     Then login should have failed
 
 *** Keywords ***
@@ -23,4 +31,6 @@ A login page
 I enter username "${user}" and password "${pass}"
     Input Username        ${user}
     Input Password        ${pass}
-    Submit Credentials
+
+Credentials are submitted
+    Submit credentials

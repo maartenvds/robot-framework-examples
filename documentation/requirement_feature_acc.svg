@@ -14,10 +14,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   inkscape:export-filename="/home/maarten/Documents/rf_demo/documentation/req_feat_proof.png"
+   inkscape:export-filename="/home/maarten/Documents/rf_demo/documentation/req_feat_acc.png"
    inkscape:export-xdpi="194.25"
    inkscape:export-ydpi="194.25"
-   sodipodi:docname="requirement_feature_proof.svg">
+   sodipodi:docname="requirement_feature_acc.svg">
   <defs
      id="defs4">
     <marker
@@ -222,8 +222,8 @@
     <text
        xml:space="preserve"
        style="font-size:12px;font-style:normal;font-weight:bold;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
-       x="178.73608"
-       y="328.08282"
+       x="146.73608"
+       y="318.08282"
        id="text5657"
        sodipodi:linespacing="125%"
        inkscape:export-filename="/home/maarten/Documents/rf_demo/documentation/req_feat_proof.png"
@@ -231,8 +231,13 @@
        inkscape:export-ydpi="194.25"><tspan
          sodipodi:role="line"
          id="tspan5659"
-         x="178.73608"
-         y="328.08282"
-         style="font-size:20px;fill:#ffffff;fill-opacity:1">proof</tspan></text>
+         x="146.73608"
+         y="318.08282"
+         style="font-size:20px;fill:#ffffff;fill-opacity:1">acceptance</tspan><tspan
+         sodipodi:role="line"
+         x="146.73608"
+         y="343.08282"
+         style="font-size:20px;fill:#ffffff;fill-opacity:1"
+         id="tspan5751">    testing</tspan></text>
   </g>
 </svg>
